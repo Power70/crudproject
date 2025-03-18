@@ -4,6 +4,7 @@ import { AuthDto } from './dto';
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
+
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
@@ -24,7 +25,7 @@ export class AuthService {
         },
       });
 
-      return user; // `hash` is not included in `select`, so it's not returned
+      return user;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -44,7 +45,7 @@ export class AuthService {
         id: true,
         email: true,
         createdAt: true,
-        hash: true, // ✅ Include hash for password verification
+        hash: true,
       },
     });
 
@@ -57,8 +58,7 @@ export class AuthService {
       throw new ForbiddenException('Invalid password');
     }
 
-    const { hash, ...userWithoutHash } = user; // ✅ Remove `hash` before returning
-
+    const { hash, ...userWithoutHash } = user;
     return userWithoutHash;
   }
 }

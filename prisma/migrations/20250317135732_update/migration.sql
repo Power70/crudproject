@@ -7,7 +7,6 @@
 */
 -- DropTable
 DROP TABLE "Bookmark";
-
 -- DropTable
 DROP TABLE "User";
 
