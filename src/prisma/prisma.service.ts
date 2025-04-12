@@ -15,5 +15,5 @@ export class PrismaService extends PrismaClient {
         },
       },
     });
-  }
+  }   
 }
