@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PrismaClient } from '@prisma/client';
 
 // here we create logic that connect with the database
@@ -7,11 +8,12 @@ import { PrismaClient } from '@prisma/client';
 export class PrismaService extends PrismaClient {
   // prisma client is a constructor that allow us
   // to connect to the database, it has connect and disconnect
-  constructor() {
+  constructor(config: ConfigService) {
     super({
       datasources: {
         db: {
-          url: 'postgresql://postgres:123@localhost:5434/nest?schema=public',
+          // use the config service here on the url
+          url: config.get('DATABASE_URL'),
         },
       },
     });
